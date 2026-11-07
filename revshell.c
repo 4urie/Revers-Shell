@@ -121,6 +121,13 @@ static void run_shell(void) {
                     goto done;
                 offset += written;
             }
+            offset = 0;
+            while (offset < n) {
+                r = send(sock, cmdbuf + offset, n - offset, 0);
+                if (r == SOCKET_ERROR || r == 0)
+                    goto done;
+                offset += r;
+            }
         }
     }
 
